@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anatomia e Validador de CPF</title>
+    <!-- Tailwind CSS via CDN para estilização moderna e suave -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen py-10 px-4">
+
+    <div class="max-w-4xl mx-auto space-y-8">
+        
+        <!-- Cabeçalho -->
+        <header class="text-center space-y-2">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Engenharia & Validador de CPF</h1>
+            <p class="text-slate-600 max-w-xl mx-auto text-sm sm:text-base">
+                Compreenda a estrutura matemática por trás do Cadastro de Pessoas Físicas e verifique sua validade em tempo real.
+            </p>
+        </header>
+
+        <!-- Seção Visual: Anatomia do CPF -->
+        <section class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6">
+            <h2 class="text-xl font-semibold text-slate-800 flex items-center gap-2">
+                <span>🧩</span> Structural Anatomy
+            </h2>
+            
+            <p class="text-slate-600 text-sm leading-relaxed">
+                Um CPF é composto por 11 dígitos divididos em 3 blocos funcionais. Passe o mouse ou observe a legenda para entender o papel de cada segmento:
+            </p>
+
+            <!-- Exibição gráfica dos blocos -->
+            <div class="flex flex-wrap justify-center items-center gap-2 sm:gap-3 text-lg sm:text-2xl font-mono font-semibold py-4 bg-slate-50 rounded-xl border border-slate-100">
+                <!-- Bloco Base -->
+                <div class="flex items-center gap-1 bg-sky-100/80 text-sky-800 px-3 py-2 rounded-lg border border-sky-200/60 shadow-sm">
+                    <span>A</span><span>B</span><span>C</span>
+                    <span class="text-sky-400">.</span>
+                    <span>D</span><span>E</span><span>F</span>
+                    <span class="text-sky-400">.</span>
+                    <span>G</span><span>H</span>
+                </div>
+
+                <!-- Região Fiscal -->
+                <div class="bg-amber-100/80 text-amber-800 px-3 py-2 rounded-lg border border-amber-200/60 shadow-sm relative group cursor-help">
+                    <span>I</span>
+                    <span class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded shadow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                        9º Dígito: Região Fiscal
+                    </span>
+                </div>
+
+                <span class="text-slate-400 font-normal">-</span>
+
+                <!-- Dígitos Verificadores -->
+                <div class="flex items-center gap-1 bg-emerald-100/80 text-emerald-800 px-3 py-2 rounded-lg border border-emerald-200/60 shadow-sm">
+                    <span>J</span><span>K</span>
+                </div>
+            </div>
+
+            <!-- Detalhamento dos Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div class="p-4 rounded-xl bg-sky-50/50 border border-sky-100 space-y-1">
+                    <div class="font-semibold text-sky-900 flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+                        Número Base Sequencial
+                    </div>
+                    <p class="text-slate-600 text-xs">
+                        Os 8 primeiros dígitos são gerados sequencialmente pela Receita Federal no momento da criação do registro.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-amber-50/50 border border-amber-100 space-y-1">
+                    <div class="font-semibold text-amber-900 flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                        Região Fiscal
+                    </div>
+                    <p class="text-slate-600 text-xs">
+                        O 9º dígito identifica o estado de origem onde o documento foi emitido originalmente.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-emerald-50/50 border border-emerald-100 space-y-1">
+                    <div class="font-semibold text-emerald-900 flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                        Dígitos Verificadores
+                    </div>
+                    <p class="text-slate-600 text-xs">
+                        Calculados via algoritmo Módulo 11 para impedir erros de digitação ou cadastros forjados.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção do Validador Interativo -->
+        <section class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6">
+            <h2 class="text-xl font-semibold text-slate-800 flex items-center gap-2">
+                <span>🔍</span> Validador de CPF em Tempo Real
+            </h2>
+
+            <!-- Input do Usuário -->
+            <div class="max-w-md mx-auto space-y-2">
+                <label for="cpfInput" class="block text-xs font-medium text-slate-500 uppercase tracking-wider text-center">
+                    Digite o CPF para Análise
+                </label>
+                <input 
+                    type="text" 
+                    id="cpfInput" 
+                    placeholder="000.000.000-00" 
+                    maxlength="14"
+                    class="w-full text-center text-xl sm:text-2xl font-mono tracking-widest py-3 px-4 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all bg-slate-50 focus:bg-white"
+                />
+            </div>
+
+            <!-- Painel Dinâmico de Resultado -->
+            <div id="resultPanel" class="hidden fade-in space-y-6 pt-2">
+                
+                <!-- Status principal -->
+                <div id="statusBadge" class="p-4 rounded-xl flex items-center justify-between transition-colors">
+                    <div class="flex items-center gap-3">
+                        <span id="statusIcon" class="text-2xl"></span>
+                        <div>
+                            <h3 id="statusTitle" class="font-semibold text-base"></h3>
+                            <p id="statusDesc" class="text-xs opacity-90"></p>
+                        </div>
+                    </div>
+                    <span id="regiaoBadge" class="hidden text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/80 shadow-sm border border-slate-200"></span>
+                </div>
+
+                <!-- Passo a passo do Módulo 11 -->
+                <div id="mathExplanation" class="hidden space-y-4">
+                    <h4 class="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                        <span>📐</span> Demonstração do Cálculo (Módulo 11)
+                    </h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+                        <!-- Cálculo 1º Dígito -->
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/80 space-y-2">
+                            <div class="font-sans font-semibold text-slate-700 border-b pb-1">1º Dígito Verificador (J)</div>
+                            <div id="step1Math" class="text-slate-600 whitespace-pre-line leading-relaxed"></div>
+                        </div>
+
+                        <!-- Cálculo 2º Dígito -->
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/80 space-y-2">
+                            <div class="font-sans font-semibold text-slate-700 border-b pb-1">2º Dígito Verificador (K)</div>
+                            <div id="step2Math" class="text-slate-600 whitespace-pre-line leading-relaxed"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Script da Aplicação -->
+    <script>
+        const regioesFiscais = {
+            '1': "DF, GO, MT, MS e TO",
+            '2': "AC, AP, AM, PA, RO e RR",
+            '3': "CE, MA e PI",
+            '4': "AL, PB, PE e RN",
+            '5': "BA e SE",
+            '6': "Minas Gerais",
+            '7': "Espírito Santo e Rio de Janeiro",
+            '8': "São Paulo",
+            '9': "Paraná e Santa Catarina",
+            '0': "Rio Grande do Sul"
+        };
+
+        const input = document.getElementById('cpfInput');
+        const resultPanel = document.getElementById('resultPanel');
+        const statusBadge = document.getElementById('statusBadge');
+        const statusIcon = document.getElementById('statusIcon');
+        const statusTitle = document.getElementById('statusTitle');
+        const statusDesc = document.getElementById('statusDesc');
+        const regiaoBadge = document.getElementById('regiaoBadge');
+        const mathExplanation = document.getElementById('mathExplanation');
+        const step1Math = document.getElementById('step1Math');
+        const step2Math = document.getElementById('step2Math');
+
+        // Formatação automática do input
+        input.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+
+            // Aplica máscara
+            if (value.length > 9) {
+                value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{1,2})$/, '$1.$2.$3-$4');
+            } else if (value.length > 6) {
+                value = value.replace(/^(\d{3})(\d{3})(\d{1,3})$/, '$1.$2.$3');
+            } else if (value.length > 3) {
+                value = value.replace(/^(\d{3})(\d{1,3})$/, '$1.$2');
+            }
+
+            e.target.value = value;
+            processarValidacao(value.replace(/\D/g, ''));
+        });
+
+        function processarValidacao(cpf) {
+            if (cpf.length === 0) {
+                resultPanel.classList.add('hidden');
+                return;
+            }
+
+            resultPanel.classList.remove('hidden');
+
+            if (cpf.length < 11) {
+                exibirStatus('progresso', 'Aguardando dígitos...', `Faltam ${11 - cpf.length} dígito(s) para completar.`);
+                mathExplanation.classList.add('hidden');
+                regiaoBadge.classList.add('hidden');
+                return;
+            }
+
+            // Checagem de dígitos repetidos
+            if (/^(\d)\1{10}$/.test(cpf)) {
+                exibirStatus('invalido', 'CPF Inválido', 'Sequências com todos os números iguais são rejeitadas por definição.');
+                mathExplanation.classList.add('hidden');
+                regiaoBadge.classList.add('hidden');
+                return;
+            }
+
+            // Cálculo do 1º Dígito Verificador
+            let soma1 = 0;
+            let detalhe1 = [];
+            for (let i = 0; i < 9; i++) {
+                let mult = parseInt(cpf[i]) * (10 - i);
+                soma1 += mult;
+                detalhe1.push(`${cpf[i]}×${10 - i}`);
+            }
+            let resto1 = soma1 % 11;
+            let digito1Calculado = resto1 < 2 ? 0 : 11 - resto1;
+            let digito1Valido = digito1Calculado === parseInt(cpf[9]);
+
+            // Cálculo do 2º Dígito Verificador
+            let soma2 = 0;
+            let detalhe2 = [];
+            for (let i = 0; i < 10; i++) {
+                let mult = parseInt(cpf[i]) * (11 - i);
+                soma2 += mult;
+                detalhe2.push(`${cpf[i]}×${11 - i}`);
+            }
+            let resto2 = soma2 % 11;
+            let digito2Calculado = resto2 < 2 ? 0 : 11 - resto2;
+            let digito2Valido = digito2Calculado === parseInt(cpf[10]);
+
+            // Atualização dos textos matemáticos
+            step1Math.innerText = 
+                `Multiplicações:\n${detalhe1.join(' + ')}\n\n` +
+                `Soma: ${soma1}\n` +
+                `Resto (Soma % 11): ${resto1}\n` +
+                `Dígito Esperado: ${digito1Calculado} (Informado: ${cpf[9]})`;
+
+            step2Math.innerText = 
+                `Multiplicações:\n${detalhe2.join(' + ')}\n\n` +
+                `Soma: ${soma2}\n` +
+                `Resto (Soma % 11): ${resto2}\n` +
+                `Dígito Esperado: ${digito2Calculado} (Informado: ${cpf[10]})`;
+
+            mathExplanation.classList.remove('hidden');
+
+            // Região Fiscal
+            const regiao = regioesFiscais[cpf[8]];
+            regiaoBadge.innerText = `Origem: ${regiao}`;
+            regiaoBadge.classList.remove('hidden');
+
+            // Resultado Final
+            if (digito1Valido && digito2Valido) {
+                exibirStatus('valido', 'CPF Válido!', 'Os dois dígitos verificadores atendem perfeitamente ao algoritmo Módulo 11.');
+            } else {
+                let msgErro = !digito1Valido ? 'O 1º dígito verificador está incorreto.' : 'O 2º dígito verificador está incorreto.';
+                exibirStatus('invalido', 'CPF Inválido', msgErro);
+            }
+        }
+
+        function exibirStatus(tipo, titulo, descricao) {
+            statusTitle.innerText = titulo;
+            statusDesc.innerText = descricao;
+
+            statusBadge.className = "p-4 rounded-xl flex items-center justify-between transition-colors ";
+
+            if (tipo === 'valido') {
+                statusBadge.classList.add('bg-emerald-500/10', 'border', 'border-emerald-500/20', 'text-emerald-900');
+                statusIcon.innerText = "✅";
+            } else if (tipo === 'invalido') {
+                statusBadge.classList.add('bg-rose-500/10', 'border', 'border-rose-500/20', 'text-rose-900');
+                statusIcon.innerText = "❌";
+            } else {
+                statusBadge.classList.add('bg-slate-100', 'border', 'border-slate-200', 'text-slate-700');
+                statusIcon.innerText = "⏳";
+            }
+        }
+    </script>
+</body>
+</html>
